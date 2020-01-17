@@ -38,7 +38,7 @@ const Wall: React.FunctionComponent<WallProps> = (props) => {
     return (
         <div onClick={onClick}>
             {/* <WallDisplay height={data.length} width={data[0].length} maxRotationValue={12} data={data} />; */}
-            <FastWallDisplay height={data.length} width={data[0].length} maxRotationValue={12} data={data} />;
+            <FastWallDisplay height={data.length} width={data[0].length} maxRotationValue={12} data={data} />
         </div>
     );
     // return (
