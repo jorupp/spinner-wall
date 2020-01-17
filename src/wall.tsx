@@ -10,11 +10,14 @@ const patterns = _.range(0,12).map(x => _.range(0, 12).map(i => _.range(0, 24).m
 const Wall: React.FunctionComponent<WallProps> = (props) => {
     const [ ix, incrementIx ] = React.useReducer((value) => (value + 1) % 12, 0);
     const data = patterns[ix];
-    React.useEffect(() => {
-        const t = setInterval(incrementIx, 50);
+    // React.useEffect(() => {
+    //     const t = setInterval(incrementIx, 500);
 
-        return () => { clearInterval(t); }
-    }, [incrementIx]);
+    //     return () => { clearInterval(t); }
+    // }, [incrementIx]);
+    React.useEffect(() => {
+        setTimeout(incrementIx, 150);
+    }, [ix, incrementIx])
 
     const onClick = React.useCallback(() => {}, []);
 
