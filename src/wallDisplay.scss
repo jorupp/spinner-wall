@@ -1,0 +1,36 @@
+$gap: 10px;
+$edgeGap: $gap * 2;
+$heightRatio: 0.15;
+
+.wall-display {
+    position: absolute;
+    top: $edgeGap;
+    bottom: $edgeGap;
+    left: $edgeGap;
+    right: $edgeGap;
+    display: grid;
+    gap: $gap;
+    background: white;
+}
+
+.cell {
+    position: relative;
+}
+.spinner {
+    position: absolute;
+    top: (50% - 50% * $heightRatio);
+    bottom: (50% - 50% * $heightRatio);
+    left: 0;
+    right: 0;
+    background: black;
+
+    // transition-property: transform;
+    // transition-delay: 1000ms;
+    transition: transform 500ms ease;
+}
+
+@for $i from 0 to 11 {
+    .spinner-#{$i} {
+        transform: rotate($i * 30deg);
+    }
+}
