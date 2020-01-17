@@ -1,6 +1,6 @@
 $gap: 10px;
 $edgeGap: $gap * 2;
-$heightRatio: 0.15;
+$heightRatio: 0.2;
 
 .wall-display {
     position: absolute;
@@ -26,7 +26,7 @@ $heightRatio: 0.15;
 
     // transition-property: transform;
     // transition-delay: 1000ms;
-    transition: transform 500ms ease;
+    transition: transform 100ms ease;
 }
 
 @for $i from 0 to 11 {
