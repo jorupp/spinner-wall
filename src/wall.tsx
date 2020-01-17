@@ -1,11 +1,14 @@
 import * as React from 'react';
 import WallDisplay from './wallDisplay';
 import * as _ from 'lodash';
+import FastWallDisplay from './fastWallDisplay';
 
 interface WallProps {
 }
 
-const patterns = _.range(0,12).map(x => _.range(0, 12).map(i => _.range(0, 24).map(ii => (x + i + ii) % 12)));
+const yR = 24;
+const xR = 48;
+const patterns = _.range(0,12).map(i => _.range(0, yR).map(y => _.range(0, xR).map(x => (i + x + y) % 12)));
 
 const Wall: React.FunctionComponent<WallProps> = (props) => {
     const [ ix, incrementIx ] = React.useReducer((value) => (value + 1) % 12, 0);
@@ -16,7 +19,7 @@ const Wall: React.FunctionComponent<WallProps> = (props) => {
     //     return () => { clearInterval(t); }
     // }, [incrementIx]);
     React.useEffect(() => {
-        setTimeout(incrementIx, 150);
+        setTimeout(incrementIx, 200);
     }, [ix, incrementIx])
 
     const onClick = React.useCallback(() => {}, []);
@@ -34,7 +37,8 @@ const Wall: React.FunctionComponent<WallProps> = (props) => {
 
     return (
         <div onClick={onClick}>
-            <WallDisplay height={data.length} width={data[0].length} maxRotationValue={12} data={data} />;
+            {/* <WallDisplay height={data.length} width={data[0].length} maxRotationValue={12} data={data} />; */}
+            <FastWallDisplay height={data.length} width={data[0].length} maxRotationValue={12} data={data} />;
         </div>
     );
     // return (

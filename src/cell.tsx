@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
+import { getClosestRotationValue } from './utils';
 
 interface CellProps {
     value: number;
@@ -11,16 +12,17 @@ const Cell: React.FunctionComponent<CellProps> = (props) => {
     const { value, maxValue, style } = props;
     const lastValueHolder = React.useRef(value);
     // const rot = Math.floor((value / maxValue) * 12);
-    let realValue = (value / maxValue) * 360;
-    while (Math.abs(realValue - lastValueHolder.current) > 180) {
-        realValue += (realValue < lastValueHolder.current) ? 180 : -180;
-    }
-    if (Math.abs(realValue + 180 - lastValueHolder.current) < Math.abs(realValue - lastValueHolder.current)) {
-        realValue += 180;
-    }
-    if (Math.abs(realValue - 180 - lastValueHolder.current) < Math.abs(realValue - lastValueHolder.current)) {
-        realValue -= 180;
-    }
+    const realValue = getClosestRotationValue((value / maxValue) * 360, lastValueHolder.current, 180);
+    // let realValue = (value / maxValue) * 360;
+    // while (Math.abs(realValue - lastValueHolder.current) > 180) {
+    //     realValue += (realValue < lastValueHolder.current) ? 180 : -180;
+    // }
+    // if (Math.abs(realValue + 180 - lastValueHolder.current) < Math.abs(realValue - lastValueHolder.current)) {
+    //     realValue += 180;
+    // }
+    // if (Math.abs(realValue - 180 - lastValueHolder.current) < Math.abs(realValue - lastValueHolder.current)) {
+    //     realValue -= 180;
+    // }
 
     lastValueHolder.current = realValue;
 
