@@ -6,6 +6,7 @@ interface D3WallDisplayProps {
     width: number;
     maxRotationValue: number;
     data: number[];
+    withColor?: boolean;
 }
 
 const spinnerRatio = 0.2;
@@ -61,28 +62,28 @@ const D3WallDisplay: React.FunctionComponent<D3WallDisplayProps> = (props) => {
         //     .attr('height', cellSize)
         //     .attr('style', 'stroke-width: 3; stroke: black; fill: none;');
         
-        const arc = d3.arc().innerRadius(0).outerRadius(cellSize/2).startAngle(0);
-        const arcTween = function(this: any, d: number) {
-            const interpolate = d3.interpolate(this._current as number, d);
-            this._current = d;
-            return function(t: number) {
-                return arc({ endAngle: interpolate(t) } as any) as string;
+        if(props.withColor) {
+            const arc = d3.arc().innerRadius(0).outerRadius(cellSize/2).startAngle(0);
+            const arcTween = function(this: any, d: number) {
+                const interpolate = d3.interpolate(this._current as number, d);
+                this._current = d;
+                return function(t: number) {
+                    return arc({ endAngle: interpolate(t) } as any) as string;
+                }
             }
+            cells.selectAll('path.color')
+                .data(d => [d / props.maxRotationValue * Math.PI * 2])
+                .join(enter => enter.append('path').attr('class', 'color'))
+                .attr('style', 'fill: red;')
+                .transition()
+                .duration(100)
+                .attrTween('d', arcTween)
+            ;
+        } else {
+            cells.selectAll('path.color').remove();
         }
-        cells.selectAll('path.color')
-            .data(d => [d / props.maxRotationValue * Math.PI * 2])
-            .join(enter => enter.append('path').attr('class', 'color'))
-            .attr('style', 'fill: red;')
-            .transition()
-            .duration(100)
-            .attrTween('d', arcTween)
-        ;
 
-        const rotateTween = function(this: any, d: number) {
-            // console.log({ t: this });
-            return d3.interpolateString(d3.select(this).attr('transform'), `rotate(${d / props.maxRotationValue * 360 + 90})`);
-        }
-        cells.selectAll('rect.spinner')
+        const bars = cells.selectAll('rect.spinner')
             .data(d => [d])
             .join(enter => enter.append('rect').attr('class', 'spinner'))
             .attr('x', -cellSize/2)
@@ -91,45 +92,16 @@ const D3WallDisplay: React.FunctionComponent<D3WallDisplayProps> = (props) => {
             .attr('height', cellSize*spinnerRatio)
             .attr('style', 'fill: black')
             .transition().duration(150)
-            // .ease(d3.easeBounceOut)
-            .attrTween('transform', rotateTween)
-            // .attr('transform', d => `rotate(${d / props.maxRotationValue * 360 + 90})`)
         ;
-
-        // div.style.columnCount = '' + props.width;
-        // if(div.children.length !== props.height * props.width) {
-        //     lastValues.current = _.range(0, props.height * props.width).map(i => 0);
-        //     const r = document.createRange();
-        //     r.selectNodeContents(div);
-        //     r.deleteContents();
-
-        //     for(let y = 0; y < props.height; y++) {
-        //         for(let x = 0; x < props.width; x++) {
-        //             const c = document.createElement('div');
-        //             c.className = 'cell';
-        //             c.style.gridRow = '' + (y + 1);
-        //             c.style.gridColumn = '' + (x + 1);
-
-        //             const s = document.createElement('div');
-        //             s.className = 'spinner';
-        //             c.appendChild(s);
-
-        //             div.appendChild(c);
-        //         }
-        //     }
-        // }
-
-        // for(let y = 0; y < props.height; y++) {
-        //     for(let x = 0; x < props.width; x++) {
-        //         const i = y * props.width + x;
-        //         const s = div.children.item(i)?.firstChild as HTMLDivElement;
-        //         const r = getClosestRotationValue(props.data[y][x] / props.maxRotationValue * 360, lastValues.current[i], 180);
-        //         lastValues.current[i] = r;
-        //         s.style.transform = 'rotate(' + r + 'deg)';
-        //     }
-        // }
-
-
+        if(props.withColor) {
+            const rotateTween = function(this: any, d: number) {
+                // console.log({ t: this });
+                return d3.interpolateString(d3.select(this).attr('transform'), `rotate(${d / props.maxRotationValue * 360 + 90})`);
+            }
+            bars.attrTween('transform', rotateTween);
+        } else {
+            bars.attr('transform', d => `rotate(${d / props.maxRotationValue * 360 + 90})`);
+        }
     });
     return <svg className="d3-wall-display" ref={ref} height={svgHeight} width={svgWidth}/>;
 };
