@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/spinner-wall/static/css/main.69eda509.chunk.css",
-    "main.js": "/spinner-wall/static/js/main.4239a8a9.chunk.js",
-    "main.js.map": "/spinner-wall/static/js/main.4239a8a9.chunk.js.map",
+    "main.js": "/spinner-wall/static/js/main.7dbcc4cf.chunk.js",
+    "main.js.map": "/spinner-wall/static/js/main.7dbcc4cf.chunk.js.map",
     "runtime-main.js": "/spinner-wall/static/js/runtime-main.9a86c232.js",
     "runtime-main.js.map": "/spinner-wall/static/js/runtime-main.9a86c232.js.map",
-    "static/js/2.658be1d3.chunk.js": "/spinner-wall/static/js/2.658be1d3.chunk.js",
-    "static/js/2.658be1d3.chunk.js.map": "/spinner-wall/static/js/2.658be1d3.chunk.js.map",
+    "static/js/2.67c4f990.chunk.js": "/spinner-wall/static/js/2.67c4f990.chunk.js",
+    "static/js/2.67c4f990.chunk.js.map": "/spinner-wall/static/js/2.67c4f990.chunk.js.map",
     "index.html": "/spinner-wall/index.html",
-    "precache-manifest.001426d06f97a54020562f453e2d63a2.js": "/spinner-wall/precache-manifest.001426d06f97a54020562f453e2d63a2.js",
+    "precache-manifest.17d7831d724569478a2100fda1169931.js": "/spinner-wall/precache-manifest.17d7831d724569478a2100fda1169931.js",
     "service-worker.js": "/spinner-wall/service-worker.js",
     "static/css/main.69eda509.chunk.css.map": "/spinner-wall/static/css/main.69eda509.chunk.css.map",
-    "static/js/2.658be1d3.chunk.js.LICENSE": "/spinner-wall/static/js/2.658be1d3.chunk.js.LICENSE"
+    "static/js/2.67c4f990.chunk.js.LICENSE": "/spinner-wall/static/js/2.67c4f990.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.9a86c232.js",
-    "static/js/2.658be1d3.chunk.js",
+    "static/js/2.67c4f990.chunk.js",
     "static/css/main.69eda509.chunk.css",
-    "static/js/main.4239a8a9.chunk.js"
+    "static/js/main.7dbcc4cf.chunk.js"
   ]
 }
