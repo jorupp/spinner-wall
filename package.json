@@ -48,6 +48,7 @@
     "@types/lodash": "^4.14.149",
     "classnames": "^2.2.6",
     "csv-parse": "^4.8.5",
+    "gammacv": "^0.3.8",
     "gh-pages": "^2.2.0",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1"
