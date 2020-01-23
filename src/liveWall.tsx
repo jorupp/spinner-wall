@@ -10,6 +10,8 @@ const LiveWall: React.FunctionComponent<LiveWallProps> = (props) => {
     const height = 720;
     const width = 1280;
 
+    const [ tempBarCount, setTempBarCount ] = React.useState(48);
+    const [ barCount, setBarCount ] = React.useState(48);
     const recentFrameTimes = React.useRef<Date[]>([]);
     const canvas = React.useRef<HTMLCanvasElement>(null);
     const [ data, setData ] = React.useState({ x: 0, y: 0, values: [] as number[] });
@@ -29,12 +31,15 @@ const LiveWall: React.FunctionComponent<LiveWallProps> = (props) => {
         const input = new gm.Tensor('uint8', [height, width, 4]);
         let pipeline = input;
         pipeline = gm.grayscale(pipeline);
-        pipeline = gm.hog(pipeline, Math.floor(Math.max(height, width) / 48), 'max');
+        const hogArg = Math.floor(Math.max(height, width) / barCount);
+        pipeline = gm.hog(pipeline, hogArg, 'max');
+        // console.log('initializing hog with ' + hogArg);
 
         const output = gm.tensorFrom(pipeline);
         sess.init(pipeline);
 
         const callback = () => {
+            // console.log('frame with hog with ' + hogArg);
             // console.log('anim frame');
             stream.getImageBuffer(input);
             sess.runOp(pipeline, {}, output);
@@ -64,7 +69,7 @@ const LiveWall: React.FunctionComponent<LiveWallProps> = (props) => {
         return () => {
             window.cancelAnimationFrame(timeout);
         };
-    }, [ setData ]);
+    }, [ setData, barCount ]);
     if (error) {
         return <div>Error: {error}</div>
     }
@@ -77,9 +82,12 @@ const LiveWall: React.FunctionComponent<LiveWallProps> = (props) => {
     // return <div>Dummy</div>;
     return (
         <div>
-            <div style={ { position: 'fixed', color: 'white' }}>
-                <button onClick={toggleCanvas}>{showCanvas ? 'Hide' : 'Show'} image</button><br/>
+            <div style={ { position: 'fixed', color: 'white', display: 'flex', flexDirection: 'column', width: '100px' }}>
+                <button onClick={toggleCanvas}>{showCanvas ? 'Hide' : 'Show'} image</button>
                 <span>FPS: {recentFrameTimes.current.length}</span>
+                <label htmlFor="spinners">Approx spinners:</label>
+                <input type="number" max={50} min={1} id="spinners" onChange={(e) => setTempBarCount(parseInt(e.target.value))} value={tempBarCount}/>
+                <button onClick={() => setBarCount(tempBarCount)}>Update spinners</button>
             </div>
             <div style={ { background: 'black', zIndex: -2, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 } }/>
             <canvas height={height} width={width} style={ { display: showCanvas ? 'block' : 'none', zIndex: -1, opacity: 0.5, position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'} } ref={canvas}/>
