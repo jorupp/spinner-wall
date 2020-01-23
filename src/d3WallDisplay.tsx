@@ -90,7 +90,7 @@ const D3WallDisplay: React.FunctionComponent<D3WallDisplayProps> = (props) => {
             .attr('width', cellSize)
             .attr('y', -cellSize*spinnerRatio/2)
             .attr('height', cellSize*spinnerRatio)
-            .attr('style', 'fill: black')
+            .attr('style', 'fill: white')
             .transition().duration(150)
         ;
         if(props.withColor) {

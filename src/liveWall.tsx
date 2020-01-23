@@ -77,11 +77,12 @@ const LiveWall: React.FunctionComponent<LiveWallProps> = (props) => {
     // return <div>Dummy</div>;
     return (
         <div>
-            <div style={ { position: 'fixed' }}>
+            <div style={ { position: 'fixed', color: 'white' }}>
                 <button onClick={toggleCanvas}>{showCanvas ? 'Hide' : 'Show'} image</button><br/>
                 <span>FPS: {recentFrameTimes.current.length}</span>
             </div>
-            <canvas height={height} width={width} style={ { display: showCanvas ? 'block' : 'none', zIndex: -1, opacity: 0.3, position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'} } ref={canvas}/>
+            <div style={ { background: 'black', zIndex: -2, position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 } }/>
+            <canvas height={height} width={width} style={ { display: showCanvas ? 'block' : 'none', zIndex: -1, opacity: 0.5, position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'} } ref={canvas}/>
             <D3WallDisplay height={y} width={x} maxRotationValue={90} data={values} />
         </div>
     );
