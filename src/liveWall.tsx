@@ -16,6 +16,7 @@ const LiveWall: React.FunctionComponent<LiveWallProps> = (props) => {
     const recentFrameTimes = React.useRef<Date[]>([]);
     const canvas = React.useRef<HTMLCanvasElement>(null);
     const [ data, setData ] = React.useState({ x: 0, y: 0, values: [] as number[] });
+    const refData = React.useRef(data);
     const [ error, setError ] = React.useState<string | undefined>();
     const [ showCanvas, setShowCanvas ] = React.useState(false);
     const toggleCanvas = React.useCallback(() => {
@@ -49,7 +50,21 @@ const LiveWall: React.FunctionComponent<LiveWallProps> = (props) => {
 
             const y = output.shape[0];
             const x = output.shape[1];
-            setData({ x, y, values: _.range(0, y).flatMap(i => _.range(0, x).map(ii => output.get(i, ii, 1) as number)) });
+            const z = output.shape[2];
+            if (refData.current.x === x && refData.current.y === y) {
+                const values = refData.current.values;
+                for(let i = 0; i < y; i++) {
+                    for(let ii = 0; ii < x; ii++) {
+                        // values[i * y + ii] = output.get(i, ii, 1);
+                        values[i * x + ii] = output.data[(i * x + ii) * z + 1];
+                    }
+                }
+                setData({ x, y, values });
+            } else {
+                const newData = { x, y, values: _.range(0, y).flatMap(i => _.range(0, x).map(ii => output.get(i, ii, 1) as number)) };
+                setData(newData);
+                refData.current = newData;
+            }
             if (canvas.current) {
                 gm.canvasFromTensor(canvas.current, input);
             }
