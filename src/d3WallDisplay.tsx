@@ -7,11 +7,13 @@ interface D3WallDisplayProps {
     maxRotationValue: number;
     data: number[];
     withColor?: boolean;
+    invert?: boolean;
 }
 
 const spinnerRatio = 0.2;
 
 const D3WallDisplay: React.FunctionComponent<D3WallDisplayProps> = (props) => {
+    const { invert } = props;
     const ref = React.useRef<SVGSVGElement>(null);
     const lastValues = React.useRef<number[]>([]);
     const svgHeight = window.innerHeight - 10;
@@ -90,7 +92,7 @@ const D3WallDisplay: React.FunctionComponent<D3WallDisplayProps> = (props) => {
             .attr('width', cellSize)
             .attr('y', -cellSize*spinnerRatio/2)
             .attr('height', cellSize*spinnerRatio)
-            .attr('style', 'fill: white')
+            .attr('style', invert ? 'fill: black' : 'fill: white')
             .transition().duration(150)
         ;
         if(props.withColor) {
