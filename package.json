@@ -51,6 +51,6 @@
     "gammacv": "^0.3.8",
     "gh-pages": "^2.2.0",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.1"
+    "node-sass": "^7.0.0"
   }
 }
